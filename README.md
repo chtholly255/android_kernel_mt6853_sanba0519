@@ -1,4 +1,4 @@
-# android_kernel_OPPO/Realme_mtk6853
+# android_kernel_OPPO/Realme_mtk6853_RKSU
 OPPO/Realme通用内核
 
 
@@ -9,3 +9,6 @@ OPPO/Realme通用内核
 内核版本:4.14.186
 
 处理器:天玑720/天玑800u 代号mtk6853
+
+***
+才发现可以创建新分支。。。~~我是傻福~~
