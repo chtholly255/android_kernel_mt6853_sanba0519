@@ -26,7 +26,6 @@
 ### `RKSU`分支（默认分支）
 `Build(rsuntk KSU legacy) Oppo K7x MT6853` 推荐使用！！！
 
-- 等待构建完成 打开编译好的AK3 并解压进去 打开anykernel.sh 搜索BLOCK=字段 找到那一行并改成`BLOCK=/dev/block/by-name/boot;`
 
 - 在TWRP刷入食用
 
