@@ -1,5 +1,6 @@
-# android_kernel_OPPO/Realme_mtk6853_RKSU
-OPPO/Realme通用内核
+# android_kernel_OPPO_mtk6853_PERM00
+~~SUSFS有点难就不做了~~
+[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/oppok7x)
 
 
 *适用:*
@@ -8,7 +9,32 @@ OPPO/Realme通用内核
 
 内核版本:4.14.186
 
-处理器:天玑720/天玑800u 代号mtk6853
+处理器:天玑720/天玑800u(尚未测试） 代号mtk6853
+
+***
+
+### 如何构建？
+
+- fork本项目
+
+- 点击Action 运行工作流程
+
+### `安卓12`分支
+`Build OppoK7x (PERM00) (Color A12)（MT6853）是集成了SukiSU`　~~但是不能用 只能开机~~
+
+`编译OPPO/Realme-安卓12-通用mt6853机型内核 支持ksu docker lxc kvm Kali-Nethunter`是可以正常使用的 你需要下载[V0.95](https://github.com/tiann/KernelSU/releases/tag/v0.9.5)的KernelSU 来使用
+
+### `RKSU`分支（默认分支）
+`Build(rsuntk KSU legacy) Oppo K7x MT6853` 推荐使用！！！
+
+- 等待构建完成 打开编译好的AK3 并解压进去 打开anykernel.sh 搜索BLOCK=字段 找到那一行并改成`BLOCK=/dev/block/by-name/boot;`
+
+- 在TWRP刷入食用
+
+- enjoy it!
+
+###
+
 
 ***
 才发现可以创建新分支。。。~~我是傻福~~
