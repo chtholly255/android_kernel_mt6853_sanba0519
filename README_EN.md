@@ -14,7 +14,7 @@ Processor: Dimensity 720 / Dimensity 800u (not tested yet)  Codename: MT6853
 - Fork this repository
 - Click Actions → Run workflow
 
-#### `android12` branch
+#### `A12` branch
 `Build OppoK7x (PERM00) (Color A12) (MT6853)` is integrated with SukiSU ~~but it doesn't work, can only boot~~
 
 `Compile OPPO/Realme - Android 12 - Generic mt6853 devices kernel, supports ksu docker lxc kvm Kali-Nethunter` can be used normally  
