@@ -1,3 +1,4 @@
+## **Chinese** | [English](README_EN.md)
 # android_kernel_OPPO_mtk6853_PERM00[![Build(rsuntk KSU legacy + Hooks) Oppo K7x MT6853](https://github.com/sanba0519/android_kernel_4.14_MT6853/actions/workflows/buildOppoK7x.yml/badge.svg)](https://github.com/sanba0519/android_kernel_4.14_MT6853/actions/workflows/buildOppoK7x.yml) [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/oppok7x)
 ~~SUSFS有点难就不做了~~
 
