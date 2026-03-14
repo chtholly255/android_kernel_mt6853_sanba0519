@@ -19,7 +19,7 @@
 
 - 点击Action 运行工作流程
 
-#### `安卓12`分支
+#### `A12`分支
 `Build OppoK7x (PERM00) (Color A12)（MT6853）是集成了SukiSU`　~~但是不能用 只能开机~~
 
 `编译OPPO/Realme-安卓12-通用mt6853机型内核 支持ksu docker lxc kvm Kali-Nethunter`是可以正常使用的 你需要下载[V0.95](https://github.com/tiann/KernelSU/releases/tag/v0.9.5)的KernelSU 来使用
