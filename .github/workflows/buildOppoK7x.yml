@@ -1,4 +1,4 @@
-name: Build(rsuntk KSU legacy + Hooks) Oppo K7x MT6853
+name: Build(rsuntk KSU legacy) MT6853 kernel
 
 on:
   push:
