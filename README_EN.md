@@ -15,13 +15,13 @@ Processor: Dimensity 720 / Dimensity 800u (not tested yet)  Codename: MT6853
 - Click Actions → Run workflow
 
 #### `A12` branch
-`Build OppoK7x (PERM00) (Color A12) (MT6853)` is integrated with SukiSU ~~but it doesn't work, can only boot~~
+`Build MT6853 Kernel-SukiSU (A12)` is integrated with SukiSU ~~but it doesn't work, can only boot~~
 
 `Compile OPPO/Realme - Android 12 - Generic mt6853 devices kernel, supports ksu docker lxc kvm Kali-Nethunter` can be used normally  
 You need to download [V0.95](https://github.com/tiann/KernelSU/releases/tag/v0.9.5) of KernelSU to use it
 
 #### [`RKSU`](https://github.com/rsuntk/KernelSU) branch (default branch)
-`Build(rsuntk KSU legacy) Oppo K7x MT6853` Highly recommended!!!
+`Build(rsuntk KSU legacy) MT6853 kernel` Highly recommended!!!
 
 > [!TIP]
 > Be sure to use this [Root Manager](https://github.com/rsuntk/KernelSU/releases/download/v3.0.0-30-legacy/KernelSU_v3.0.0-30-legacy_32334-release.apk)
