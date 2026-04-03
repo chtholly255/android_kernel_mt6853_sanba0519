@@ -25,7 +25,7 @@
 `编译OPPO/Realme-安卓12-通用mt6853机型内核 支持ksu docker lxc kvm Kali-Nethunter`是可以正常使用的 你需要下载[V0.95](https://github.com/tiann/KernelSU/releases/tag/v0.9.5)的KernelSU 来使用
 
 #### [`RKSU`](https://github.com/rsuntk/KernelSU)分支（默认分支）
-`Build(rsuntk KSU legacy) Oppo K7x MT6853` 推荐使用！！！
+`Build(rsuntk KSU legacy) MT6853 kernel` 推荐使用！！！
 > [!TIP]
 > 务必使用此[Root管理器](https://github.com/rsuntk/KernelSU/releases/download/v3.0.0-30-legacy/KernelSU_v3.0.0-30-legacy_32334-release.apk)
 
