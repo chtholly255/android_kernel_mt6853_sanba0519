@@ -56,7 +56,7 @@ jobs:
         sed -i '/ksu_core/d;/KSU/d' drivers/Kconfig drivers/Makefile || true
         
         # 2. 克隆 Legacy 分支
-        git clone --depth=1 https://github.com/rsuntk/KernelSU
+        git clone --depth=1 https://github.com/rsuntk/KernelSU KernelSU
         
         # 3. 地毯式搜索 Kconfig 并拷贝整个源码目录
         mkdir -p drivers/ksu_core
