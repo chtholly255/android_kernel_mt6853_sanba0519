@@ -53,6 +53,7 @@ jobs:
         
         # 1. 彻底清理
         rm -rf drivers/ksu_core KernelSU_Tmp
+        rm -rf KernelSU
         sed -i '/ksu_core/d;/KSU/d' drivers/Kconfig drivers/Makefile || true
         
         # 2. 克隆 Legacy 分支
