@@ -56,7 +56,7 @@ jobs:
         sed -i '/ksu_core/d;/KSU/d' drivers/Kconfig drivers/Makefile || true
         
         # 2. 克隆 Legacy 分支
-        git clone --depth=1 https://github.com/rsuntk/KernelSU KernelSU_Tmp -b v3.0.0-30-legacy || { echo "克隆失败"; exit 1; }
+        git clone --depth=1 https://github.com/rsuntk/KernelSU
         
         # 3. 地毯式搜索 Kconfig 并拷贝整个源码目录
         mkdir -p drivers/ksu_core
@@ -116,11 +116,6 @@ jobs:
         # 应用 patch（-p1 是标准，忽略空格差异）
         patch -p1 < ksu-4.14.patch || { echo "patch 应用失败"; cat ksu-4.14.patch; exit 1; }
 
-        # 清理下载的文件（可选）
-        rm -f ksu-4.14.patch
-
-        echo "KSU_LOG: 官方 patch 应用成功，检查关键文件是否修改"
-        git diff --stat fs/open.c fs/exec.c fs/stat.c fs/read_write.c kernel/reboot.c || echo "无变化？可能源码已包含补丁"
     - name: 设置 ccache
       uses: hendrikmuhs/ccache-action@v1.2
       with:
