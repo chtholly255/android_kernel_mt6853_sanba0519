@@ -1,5 +1,5 @@
 ## **Chinese** | [English](README_EN.md)
-# android_kernel_OPPO_MT6853[![Build(rsuntk KSU legacy + Hooks) Oppo K7x MT6853](https://github.com/sanba0519/android_kernel_4.14_MT6853/actions/workflows/buildOppoK7x.yml/badge.svg)](https://github.com/sanba0519/android_kernel_4.14_MT6853/actions/workflows/buildOppoK7x.yml) [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/oppok7x)
+# android_kernel_OPPO_MT6853[![Build(rsuntk KSU legacy + Hooks) Oppo K7x MT6853](https://github.com/sanba0519/android_kernel_4.14_MT6853/actions/workflows/buildOppoK7x.yml/badge.svg)](https://github.com/sanba0519/android_kernel_4.14_MT6853/actions/workflows/buildOppoK7x.yml) [![Telegram](https://ziadoua.github.io/m3-Markdown-Badges/badges/Telegram/telegram2.svg)](https://t.me/oppok7x)
 ~~SUSFS自己用不到就不做了~~
 
 
