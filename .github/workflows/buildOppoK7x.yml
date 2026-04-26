@@ -1,7 +1,6 @@
 name: Build(rsuntk KSU legacy) MT6853 kernel
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       BBR:
