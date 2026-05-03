@@ -2,7 +2,7 @@
 VERSION = 4
 PATCHLEVEL = 14
 SUBLEVEL = 186
-EXTRAVERSION =-酷安@三笆-GitHub@sanba0519
+EXTRAVERSION =-by-sanba
 NAME = Petit Gorille
 
 # *DOCUMENTATION*
