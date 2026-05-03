@@ -1,4 +1,3 @@
-CONFIG_KSU_DEBUG=y
 #
 # Automatically generated file; DO NOT EDIT.
 # Linux/arm64 4.14.186 Kernel Configuration
@@ -6236,7 +6235,7 @@ CONFIG_TEE=y
 # KernelSU
 #
 CONFIG_KSU=y
-# CONFIG_KSU_DEBUG is not set
+CONFIG_KSU_DEBUG=y
 
 #
 # Firmware Drivers
