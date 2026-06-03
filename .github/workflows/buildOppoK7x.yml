@@ -83,11 +83,15 @@ jobs:
         export ARCH=arm64
         export SUBARCH=arm64
 
+        make -s -j$(nproc --all) O=out ARCH=arm64 mt6853-ss_defconfig
+
+
+
         ./scripts/config --file out/.config \
-          --enable CONFIG_NAMESPACES \
-          --enable CONFIG_USER_NS \
-          --enable DEVTMPFS \
-          --enable DEVTMPFS_MOUNT
+            --enable CONFIG_NAMESPACES \
+            --enable CONFIG_USER_NS \
+            --enable CONFIG_DEVTMPFS \
+            --enable CONFIG_DEVTMPFS_MOUNT
         make O=out olddefconfig
 
         # 添加BBR
