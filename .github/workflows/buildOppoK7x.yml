@@ -83,6 +83,13 @@ jobs:
         export ARCH=arm64
         export SUBARCH=arm64
 
+        ./scripts/config --file out/.config \
+          --enable CONFIG_NAMESPACES \
+          --enable CONFIG_USER_NS \
+          --enable DEVTMPFS \
+          --enable DEVTMPFS_MOUNT
+        make O=out olddefconfig
+
         # 添加BBR
         if [ "${{ github.event.inputs.BBR }}" = "true" ]; then
           echo "启用 BBR..."
@@ -106,7 +113,7 @@ jobs:
         cd $GITHUB_WORKSPACE/kernel_workspace
         git clone https://github.com/sanba0519/AnyKernel3
         sed -i 's/do.devicecheck=1/do.devicecheck=0/g' AnyKernel3/anykernel.sh
-        sed -i 's!block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!block=auto;!g' AnyKernel3/anykernel.sh
+        sed -i 's!block=/dev/block/by-name/boot;!block=auto;!g' AnyKernel3/anykernel.sh
         sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' AnyKernel3/anykernel.sh
         cp android-kernel/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
         rm -rf AnyKernel3/.git* AnyKernel3/README.md
