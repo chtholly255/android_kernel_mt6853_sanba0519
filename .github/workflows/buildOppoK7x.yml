@@ -88,10 +88,10 @@ jobs:
 
 
         ./scripts/config --file out/.config \
-            --enable CONFIG_NAMESPACES \
-            --enable CONFIG_USER_NS \
-            --enable CONFIG_DEVTMPFS \
-            --enable CONFIG_DEVTMPFS_MOUNT
+            --enable NAMESPACES \
+            --enable USER_NS \
+            --enable DEVTMPFS \
+            --enable DEVTMPFS_MOUNT
         make O=out olddefconfig
 
         # 添加BBR
