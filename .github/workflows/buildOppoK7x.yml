@@ -110,9 +110,7 @@ jobs:
           --enable CONFIG_NAMESPACES \
           --enable CONFIG_USER_NS \
           --enable CONFIG_DEVTMPFS \
-          --enable CONFIG_DEVTMPFS_MOUNT \
-          --enable CONFIG_TCP_CONG_BBR \
-          --enable CONFIG_NET_SCH_FQ
+          --enable CONFIG_DEVTMPFS_MOUNT
 
 
         make O=out ARCH=arm64 olddefconfig
@@ -122,14 +120,7 @@ jobs:
         export KBUILD_BUILD_HOST=coolapk@sanba
         export KBUILD_BUILD_USER=GitHub@sanba0519
         make -s -j$(nproc --all) O=out ARCH=arm64 mt6853-ss_defconfig
-        make -j"$(nproc)" \
-            O=out \
-            ARCH=arm64 \
-            CC="ccache clang" \
-            CLANG_TRIPLE=aarch64-linux-gnu- \
-            CROSS_COMPILE=aarch64-linux-android- \
-            CROSS_COMPILE_ARM32=arm-linux-androideabi- \
-            LD=ld.lld
+        make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- LD=ld.lld
                 
     - name: 制作Anykernel3卡刷包
       run: |
