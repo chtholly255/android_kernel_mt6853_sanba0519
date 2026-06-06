@@ -117,9 +117,7 @@ jobs:
                 --enable CONFIG_NAMESPACES \
                 --enable CONFIG_USER_NS \
                 --enable CONFIG_DEVTMPFS \
-                --enable CONFIG_DEVTMPFS_MOUNT \
-                --enable CONFIG_TCP_CONG_BBR \
-                --enable CONFIG_NET_SCH_FQ
+                --enable CONFIG_DEVTMPFS_MOUNT
 
         make O=out ARCH=arm64 olddefconfig
 
