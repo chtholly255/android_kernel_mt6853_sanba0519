@@ -116,6 +116,7 @@ jobs:
         ./scripts/config --file out/.config \
                 --enable CONFIG_NAMESPACES \
                 --enable CONFIG_DEVTMPFS \
+                --disable CONFIG_USER_NS \
                 --enable CONFIG_DEVTMPFS_MOUNT
 
         make O=out ARCH=arm64 olddefconfig
