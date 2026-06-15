@@ -9,6 +9,11 @@ on:
         description: "是否启用 BBR 加速（不了解请不要启用）"
         required: false
         default: false
+      DroidSpace:
+        type: boolean
+        description: "是否启用 DroidSpace（不了解请不要启用）"
+        required: false
+        default: false
 
     
 jobs:
@@ -83,9 +88,9 @@ jobs:
         export ARCH=arm64
         export SUBARCH=arm64
 
-        make -s -j$(nproc --all) O=out ARCH=arm64 mt6853-ss_defconfig
-
-
+        if [ "${{ github.event.inputs.DroidSpace }}" = "true" ]; then
+          echo "启用 DroidSpace..."
+          make -s -j$(nproc --all) O=out ARCH=arm64 mt6853-ss_defconfig
 
         ./scripts/config --file out/.config \
             --enable NAMESPACES \
@@ -93,6 +98,9 @@ jobs:
             --enable DEVTMPFS \
             --enable DEVTMPFS_MOUNT
         make O=out olddefconfig
+        else
+          echo "不启用 DroidSpace..."
+        fi
 
         # 添加BBR
         if [ "${{ github.event.inputs.BBR }}" = "true" ]; then
@@ -105,7 +113,7 @@ jobs:
           echo "不启用 BBR..."
         fi
 
-
+        make O=out olddefconfig
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang-aosp/bin:$GITHUB_WORKSPACE/kernel_workspace/gcc64/bin:$GITHUB_WORKSPACE/kernel_workspace/gcc32/bin:$PATH
         export KBUILD_BUILD_HOST=coolapk@sanba
