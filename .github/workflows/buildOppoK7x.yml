@@ -83,6 +83,17 @@ jobs:
         export ARCH=arm64
         export SUBARCH=arm64
 
+        make -s -j$(nproc --all) O=out ARCH=arm64 mt6853-ss_defconfig
+
+
+
+        ./scripts/config --file out/.config \
+            --enable NAMESPACES \
+            --enable USER_NS \
+            --enable DEVTMPFS \
+            --enable DEVTMPFS_MOUNT
+        make O=out olddefconfig
+
         # 添加BBR
         if [ "${{ github.event.inputs.BBR }}" = "true" ]; then
           echo "启用 BBR..."
@@ -94,19 +105,37 @@ jobs:
           echo "不启用 BBR..."
         fi
 
+
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang-aosp/bin:$GITHUB_WORKSPACE/kernel_workspace/gcc64/bin:$GITHUB_WORKSPACE/kernel_workspace/gcc32/bin:$PATH
         export KBUILD_BUILD_HOST=coolapk@sanba
         export KBUILD_BUILD_USER=GitHub@sanba0519
         make -s -j$(nproc --all) O=out ARCH=arm64 mt6853-ss_defconfig
-        make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- LD=ld.lld
+        make -s -j"$(nproc)" O=out ARCH=arm64 mt6853-ss_defconfig
+
+        ./scripts/config --file out/.config \
+                --enable CONFIG_NAMESPACES \
+                --enable CONFIG_DEVTMPFS \
+                --disable CONFIG_USER_NS \
+                --enable CONFIG_DEVTMPFS_MOUNT
+
+        make O=out ARCH=arm64 olddefconfig
+
+        make -j"$(nproc)" \
+                O=out \
+                ARCH=arm64 \
+                CC="ccache clang" \
+                CLANG_TRIPLE=aarch64-linux-gnu- \
+                CROSS_COMPILE=aarch64-linux-android- \
+                CROSS_COMPILE_ARM32=arm-linux-androideabi- \
+                LD=ld.lld
                 
     - name: 制作Anykernel3卡刷包
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         git clone https://github.com/sanba0519/AnyKernel3
         sed -i 's/do.devicecheck=1/do.devicecheck=0/g' AnyKernel3/anykernel.sh
-        sed -i 's!block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!block=auto;!g' AnyKernel3/anykernel.sh
+        sed -i 's!block=/dev/block/by-name/boot;!block=auto;!g' AnyKernel3/anykernel.sh
         sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' AnyKernel3/anykernel.sh
         cp android-kernel/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
         rm -rf AnyKernel3/.git* AnyKernel3/README.md
