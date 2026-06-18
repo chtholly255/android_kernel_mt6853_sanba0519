@@ -54,7 +54,7 @@ jobs:
     - name: Clone kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone -b main --single-branch --depth=5 https://github.com/sanba0519/OPPO-Realme_kernel_4.14_MT6853 android-kernel
+        git clone -b main --single-branch https://github.com/sanba0519/OPPO-Realme_kernel_4.14_MT6853 android-kernel
         cd android-kernel
 
     - name: Apply RKSU patch
@@ -152,13 +152,6 @@ jobs:
         fi
         echo "artifact_name=${NAME}" >> $GITHUB_OUTPUT
 
-    - name: Generate kernel update log
-      id: changelog
-      run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        echo "LOGS<<EOF" >> $GITHUB_OUTPUT
-        git log --oneline -n 5 >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
                 
     - name: Package AnyKernel3
       run: |
@@ -169,6 +162,7 @@ jobs:
         sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' AnyKernel3/anykernel.sh
         cp android-kernel/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
         rm -rf AnyKernel3/.git* AnyKernel3/README.md
+        zip -r "${{ steps.gen_name.outputs.artifact_name }}.zip" AnyKernel3/
         
     
     
@@ -178,18 +172,13 @@ jobs:
         name: ${{steps.gen_name.outputs.artifact_name}}
         path: kernel_workspace/AnyKernel3/*
 
-    - name: Github Releases
-      uses: softprops/action-gh-release@v1
+    - name: Upload to Telegram
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: Kernel-MT6853-${{ github.run_id }}
-        name: MT6853 Kernel Release-A12 [Build #${{ github.run_number }}]
-        body: |
-          自动编译 OPPO/Realme MT6853 安卓12 内核
-          - 编译工具：NDK r24 Clang + GCC 4.9
-          - 内置：RKSU
-          
-          ### 📝 近期内核更新日志 (kernel-main)
-          ${{ steps.changelog.outputs.LOGS }}  
-      
+          API_ID: ${{ secrets.API_ID }}
+          API_HASH: ${{ secrets.API_HASH }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          BOT_CI_SESSION: ${{ secrets.BOT_CI_SESSION }}
+      run: |
+          pip3 install telethon
+          python3 .github/bot.py "$GITHUB_WORKSPACE/kernel_workspace/${{ steps.gen_name.outputs.artifact_name }}.zip"
