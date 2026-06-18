@@ -22,5 +22,6 @@ TO DO:
      - [ ] [BBG](https://github.com/vc-teahouse/Baseband-guard)防格机
      - [ ] So on...
 - [ ] 修补bpf
+- [x] 自动发布到[TG频道](https://t.me/mt6853o)
 
 ~~- [ ] 自动发布到releases~~(感觉没必要
