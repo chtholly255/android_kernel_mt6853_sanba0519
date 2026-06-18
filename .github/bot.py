@@ -10,7 +10,7 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN")
 CHAT_ID = int(os.environ.get("CHAT_ID"))
 BOT_CI_SESSION = os.environ.get("BOT_CI_SESSION")
 
-async def send_telegram_files(files):
+async def send_telegram_files(files, caption=None):
     """
     Connects to Telegram and sends the specified files as a group message.
     """
@@ -25,18 +25,32 @@ async def send_telegram_files(files):
         await client.send_file(
             entity=CHAT_ID,
             file=files,
+            caption=caption,
+            parse_mode='html',
         )
         print("[+] Files sent successfully.")
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        # Get all file paths from command-line arguments
-        apk_files = sys.argv[1:]
-        print(f"[+] Found files to upload: {apk_files}")
+    caption = None
+    files = []
+
+    args = sys.argv[1:]
+    i = 0
+    while i < len(args):
+        if args[i] == '--caption':
+            i += 1
+            if i < len(args):
+                caption = args[i]
+        else:
+            files.append(args[i])
+        i += 1
+
+    if files:
+        print(f"[+] Found files to upload: {files}")
+        print(f"[+] Caption: {caption}")
         try:
-            # Run the asynchronous function
-            asyncio.run(send_telegram_files(apk_files))
+            asyncio.run(send_telegram_files(files, caption=caption))
         except Exception as e:
             print(f"[-] An error occurred: {e}")
     else:
