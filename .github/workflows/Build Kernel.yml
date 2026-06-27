@@ -1,23 +1,22 @@
-name: RKSU for MT6853
+name: Build Kernel
 
 on:
   workflow_dispatch:
     inputs:
       BBR:
         type: boolean
-        description: "是否启用 BBR 加速（不了解请不要启用）"
+        description: "Enable BBR"
         required: false
         default: false
       DroidSpace:
         type: boolean
-        description: "是否启用 DroidSpace（不了解请不要启用）"
+        description: "Enable Droidspace"
         required: false
         default: false
-      TG:
+      KernelSU:
         type: boolean
-        description: "!!!请勿开启!!!/Don't Open"
         required: false
-        default: false
+        default: true
     
 jobs:
   build:
@@ -63,15 +62,11 @@ jobs:
 
     - name: Apply RKSU patch
       run: |
-        echo "KSU_LOG: 开始下载并应用 RKSU 官方 4.14 patch"
-        
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
 
-        # 下载官方 patch
         wget https://github.com/rksuorg/kernel_patches/raw/master/manual_hook/kernel-4.14.patch -O ksu-4.14.patch || { echo "下载 patch 失败"; exit 1; }
 
-        # 应用 patch（-p1 是标准，忽略空格差异）
-        patch -p1 < ksu-4.14.patch || { echo "patch 应用失败"; cat ksu-4.14.patch; exit 1; }
+        patch -p1 < ksu-4.14.patch || { echo "Fail to ally patch"; cat ksu-4.14.patch; exit 1; }
 
 
     - name: Setup KernelSU
@@ -95,7 +90,7 @@ jobs:
         export SUBARCH=arm64
 
         if [ "${{ github.event.inputs.DroidSpace }}" = "true" ]; then
-          echo "启用 DroidSpace..."
+          echo "DroidSpace Enabled"
           make -s -j$(nproc --all) O=out ARCH=arm64 mt6853-ss_defconfig
 
         ./scripts/config --file out/.config \
@@ -105,18 +100,17 @@ jobs:
             --enable DEVTMPFS_MOUNT
         make O=out olddefconfig
         else
-          echo "不启用 DroidSpace..."
+          echo "DroidSpace Disabled"
         fi
 
-        # 添加BBR
         if [ "${{ github.event.inputs.BBR }}" = "true" ]; then
-          echo "启用 BBR..."
+          echo "BBR Enabled"
           ./scripts/config --file out/.config \
             --enable CONFIG_TCP_CONG_BBR \
             --enable CONFIG_NET_SCH_FQ
           make O=out olddefconfig
         else
-          echo "不启用 BBR..."
+          echo "BBR Disabled"
         fi
 
         make O=out olddefconfig
@@ -175,44 +169,3 @@ jobs:
       with:
         name: ${{steps.gen_name.outputs.artifact_name}}
         path: kernel_workspace/AnyKernel3/*
-      
-    - name: Generate Telegram caption
-      id: gen_caption
-      run: |
-        COMMIT_SHA=$(git rev-parse --short HEAD)
-        COMMIT_MSG=$(git log -1 --pretty=format:'%s')
-        echo "caption<<EOF" >> $GITHUB_OUTPUT
-        echo "<pre>" >> $GITHUB_OUTPUT
-        echo "🔧 Commit: ${COMMIT_SHA} - ${COMMIT_MSG}" >> $GITHUB_OUTPUT
-        echo "" >> $GITHUB_OUTPUT
-        echo "📦 Feature:" >> $GITHUB_OUTPUT
-        if [ "${{ github.event.inputs.BBR }}" = "true" ]; then
-          echo "✅ BBR" >> $GITHUB_OUTPUT
-        else
-          echo "❌ BBR" >> $GITHUB_OUTPUT
-        fi
-        if [ "${{ github.event.inputs.DroidSpace }}" = "true" ]; then
-          echo "✅ DroidSpace" >> $GITHUB_OUTPUT
-        else
-          echo "❌ DroidSpace" >> $GITHUB_OUTPUT
-        fi
-        echo "</pre>" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
-      
-    - name: Upload to Telegram
-      env:
-          API_ID: ${{ secrets.API_ID }}
-          API_HASH: ${{ secrets.API_HASH }}
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          CHAT_ID: ${{ secrets.CHAT_ID }}
-          BOT_CI_SESSION: ${{ secrets.BOT_CI_SESSION }}
-          CAPTION: ${{ steps.gen_caption.outputs.caption }}
-      run: |
-        if [ "${{ github.event.inputs.TG }}" = "true" ]; then
-          echo "------------正在上传到Telegram------------"
-          pip3 install telethon
-          python3 .github/bot.py --caption "$CAPTION" \
-            "$GITHUB_WORKSPACE/kernel_workspace/${{ steps.gen_name.outputs.artifact_name }}.zip"
-        else
-          echo "------------跳过ing------------"
-          fi
